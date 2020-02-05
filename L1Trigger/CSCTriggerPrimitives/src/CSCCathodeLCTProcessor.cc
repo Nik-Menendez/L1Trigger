@@ -777,7 +777,7 @@ std::vector<CSCCLCTDigi> CSCCathodeLCTProcessor::findLCTs(const std::vector<int>
         }
 
         // If 1st best CLCT is found, look for other CLCTs
-        if (best_halfstrip[0] >= -1) {
+        if (best_halfstrip[0] >= 0) {
           std::cout << "Checking for extra CLCTs, max(" << CSCConstants::MAX_CLCTS_PER_PROCESSOR << std::endl;
           for (int ilct = 1; ilct < CSCConstants::MAX_CLCTS_PER_PROCESSOR; ilct++) {
             // std::cout << "Marking busy keys for CLCT " << ilct << std::endl;
@@ -1243,7 +1243,7 @@ std::vector<CSCCLCTDigi> CSCCathodeLCTProcessor::readoutCLCTs(int nMaxCLCTs) con
     if (!p.isValid()) continue;
 
     //ignore the CLCTs with an index larger than nMaxCLCTs
-    if (p.getTrknmb() > nMaxCLCTs) continue;
+    if (p.getTrknmb() > nMaxCLCTs) break;
 
     const int bx = p.getBX();
     // Skip CLCTs found too early relative to L1Accept.
