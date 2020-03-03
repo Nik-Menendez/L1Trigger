@@ -5,10 +5,10 @@
 import FWCore.ParameterSet.Config as cms
 from Configuration.StandardSequences.Eras import eras
 
-process = cms.Process("CSCTPEmulator", eras.Run3)
+process = cms.Process("ANA", eras.Run3)
 
 process.maxEvents = cms.untracked.PSet(
-    input = cms.untracked.int32(100)
+    input = cms.untracked.int32(10)
     #input = cms.untracked.int32(-1)
 )
 
@@ -24,7 +24,9 @@ process.source = cms.Source("PoolSource",
          #'/store/mc/PhaseIITDRSpring19DR/Nu_E10-pythia8-gun/GEN-SIM-DIGI-RAW/PU200_106X_upgrade2023_realistic_v3-v3/70000/EDE4B502-F1D1-2446-ACED-49A370F253E1.root'
          #'file:/afs/cern.ch/work/s/sixie/public/releases/run3/CSCL1Trigger/CMSSW_10_6_4/src/TPEHists.signal.root'
   
-         'file://cmseos.fnal.gov//store/user/menendez/ZeroBias/Run2018D_All_LCT/200210_213120/0000/lcts_725.root'
+         #'root://cmsxrootd.fnal.gov//store/user/menendez/ZeroBias/Run2018D_All_LCT/200210_213120/0000/lcts_725.root'
+         'file:lcts_emulated.root'
+         #'file:TPEHists.root'
      )
 )
 
@@ -73,8 +75,8 @@ process.load("L1Trigger.CSCTriggerPrimitives.cscTriggerPrimitiveDigis_cfi")
 # =============================
 process.load("L1Trigger.CSCTriggerPrimitives.CSCTriggerPrimitivesReader_cfi")
 process.lctreader.debug = False
-process.lctreader.CSCComparatorDigiProducer = cms.InputTag("simMuonCSCDigis","MuonCSCComparatorDigi")
-process.lctreader.CSCWireDigiProducer = cms.InputTag("simMuonCSCDigis","MuonCSCWireDigi")
+#process.lctreader.CSCComparatorDigiProducer = cms.InputTag("simMuonCSCDigis","MuonCSCComparatorDigi")
+#process.lctreader.CSCWireDigiProducer = cms.InputTag("simMuonCSCDigis","MuonCSCWireDigi")
 
 # Output
 # ======
@@ -94,7 +96,7 @@ process.TFileService = cms.Service("TFileService",
 # ==============
 process.p = cms.Path(#process.muonCSCDigis*
     #process.muonCSCDigis
-    process.cscTriggerPrimitiveDigis*
+    #process.cscTriggerPrimitiveDigis*
     process.lctreader
     )
 
